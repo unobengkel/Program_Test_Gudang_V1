@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block title %}Daftar Stok{% endblock %}
+{% block content %}
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <!-- Form -->
+    <div class="bg-white rounded-lg shadow p-6">
+        <h2 class="text-lg font-semibold mb-4">
+            {% if edit_item %}Edit Stok{% else %}Tambah Stok{% endif %}
+        </h2>
+        <form action="{{ url_for('stok.update', id=edit_item.id) if edit_item else url_for('stok.create') }}" method="POST">
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700 mb-1">Barang</label>
+                <select name="idbarang" required class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <option value="">-- Pilih Barang --</option>
+                    {% for b in barang_list %}
+                    <option value="{{ b.id }}" {% if edit_item and edit_item.idbarang == b.id %}selected{% endif %}>
+                        {{ b.nama_jenis }} - {{ b.nama_merek }} ({{ b.nama_satuan }})
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700 mb-1">Jumlah</label>
+                <input type="number" name="jumlah" value="{{ edit_item.jumlah if edit_item else '' }}" required min="1"
+                       class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                       placeholder="Masukkan jumlah">
+            </div>
+            <div class="flex space-x-2">
+                <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+                    {{ 'Update' if edit_item else 'Simpan' }}
+                </button>
+                {% if edit_item %}
+                <a href="{{ url_for('stok.index') }}" class="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600">Batal</a>
+                {% endif %}
+            </div>
+        </form>
+    </div>
+
+    <!-- Table -->
+    <div class="lg:col-span-2 bg-white rounded-lg shadow p-6">
+        <h2 class="text-lg font-semibold mb-4">Daftar Stok</h2>
+        <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+                <thead>
+                    <tr class="bg-gray-50 border-b">
+                        <th class="text-left py-3 px-4">ID</th>
+                        <th class="text-left py-3 px-4">Barang</th>
+                        <th class="text-right py-3 px-4">Jumlah</th>
+                        <th class="text-left py-3 px-4">Tanggal</th>
+                        <th class="text-center py-3 px-4">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if data %}
+                    {% for item in data %}
+                    <tr class="border-b hover:bg-gray-50">
+                        <td class="py-3 px-4">{{ item.id }}</td>
+                        <td class="py-3 px-4">{{ item.nama_barang }}</td>
+                        <td class="py-3 px-4 text-right font-semibold">{{ item.jumlah }}</td>
+                        <td class="py-3 px-4">{{ item.datetime }}</td>
+                        <td class="py-3 px-4 text-center">
+                            <a href="{{ url_for('stok.edit', id=item.id) }}" class="text-blue-600 hover:text-blue-800 mr-2">✏️ Edit</a>
+                            <form action="{{ url_for('stok.delete', id=item.id) }}" method="POST" class="inline" onsubmit="return confirm('Yakin hapus?')">
+                                <button type="submit" class="text-red-600 hover:text-red-800">🗑️ Hapus</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    {% else %}
+                    <tr>
+                        <td colspan="5" class="text-center py-6 text-gray-500">Belum ada data stok</td>
+                    </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

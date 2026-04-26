@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Beranda - Stok Gudang{% endblock %}
+{% block content %}
+<div class="text-center py-12">
+    <h1 class="text-4xl font-bold text-gray-800 mb-6">📦 Aplikasi Stok Gudang</h1>
+    <p class="text-lg text-gray-600 mb-8">Kelola data stok gudang dengan mudah dan cepat</p>
+    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 max-w-4xl mx-auto">
+        <a href="{{ url_for('jenis.index') }}" class="bg-white rounded-lg shadow p-6 hover:shadow-lg transition hover:bg-blue-50">
+            <div class="text-3xl mb-2">📋</div>
+            <div class="font-semibold text-gray-700">Jenis</div>
+        </a>
+        <a href="{{ url_for('satuan.index') }}" class="bg-white rounded-lg shadow p-6 hover:shadow-lg transition hover:bg-blue-50">
+            <div class="text-3xl mb-2">⚖️</div>
+            <div class="font-semibold text-gray-700">Satuan</div>
+        </a>
+        <a href="{{ url_for('merek.index') }}" class="bg-white rounded-lg shadow p-6 hover:shadow-lg transition hover:bg-blue-50">
+            <div class="text-3xl mb-2">🏷️</div>
+            <div class="font-semibold text-gray-700">Merek</div>
+        </a>
+        <a href="{{ url_for('barang.index') }}" class="bg-white rounded-lg shadow p-6 hover:shadow-lg transition hover:bg-blue-50">
+            <div class="text-3xl mb-2">📦</div>
+            <div class="font-semibold text-gray-700">Barang</div>
+        </a>
+        <a href="{{ url_for('stok.index') }}" class="bg-white rounded-lg shadow p-6 hover:shadow-lg transition hover:bg-blue-50">
+            <div class="text-3xl mb-2">📊</div>
+            <div class="font-semibold text-gray-700">Stok</div>
+        </a>
+    </div>
+</div>
+{% endblock %}

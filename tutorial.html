@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tutorial - Aplikasi Stok Gudang</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 text-gray-800">
+    <div class="max-w-4xl mx-auto px-4 py-8">
+        <!-- Header -->
+        <div class="bg-blue-600 text-white rounded-lg p-6 mb-8">
+            <h1 class="text-3xl font-bold">📦 Aplikasi Stok Gudang</h1>
+            <p class="text-blue-100 mt-2">Panduan Lengkap Setup, Konfigurasi & Pengoperasian</p>
+        </div>
+
+        <!-- Daftar Isi -->
+        <div class="bg-white rounded-lg shadow p-6 mb-8">
+            <h2 class="text-xl font-bold mb-4">📑 Daftar Isi</h2>
+            <ol class="list-decimal list-inside space-y-2 text-blue-600">
+                <li><a href="#cara-setting-port" class="hover:underline">Cara Setting Port Aplikasi</a></li>
+                <li><a href="#setup-jalankan" class="hover:underline">Cara Setup dan Jalankan Program</a></li>
+                <li><a href="#project-manager" class="hover:underline">Cara Setup dan Jalankan di Project Manager (VS Code)</a></li>
+                <li><a href="#pengoperasian" class="hover:underline">Cara Pengoperasian Aplikasi</a></li>
+                <li><a href="#struktur-folder" class="hover:underline">Struktur Folder</a></li>
+            </ol>
+        </div>
+
+        <!-- 1. Setting Port -->
+        <div id="cara-setting-port" class="bg-white rounded-lg shadow p-6 mb-8">
+            <h2 class="text-2xl font-bold mb-4">1️⃣ Cara Setting Port Aplikasi</h2>
+
+            <div class="mb-6">
+                <h3 class="text-lg font-semibold text-blue-700 mb-2">Metode 1: Ubah di File app.py (Permanen)</h3>
+                <p class="mb-2">Buka file <code class="bg-gray-100 px-2 py-1 rounded text-red-600">app.py</code> dan cari baris terakhir:</p>
+                <div class="bg-gray-800 text-green-300 rounded-lg p-4 mb-3 font-mono text-sm overflow-x-auto">
+                    app.run(debug=True, host="0.0.0.0", port=<span class="text-yellow-300">5000</span>)
+                </div>
+                <p class="mb-2">Ubah angka <strong>5000</strong> menjadi port yang diinginkan, misal <strong>8080</strong>:</p>
+                <div class="bg-gray-800 text-green-300 rounded-lg p-4 mb-3 font-mono text-sm overflow-x-auto">
+                    app.run(debug=True, host="0.0.0.0", port=<span class="text-yellow-300">8080</span>)
+                </div>
+                <p class="text-sm text-gray-500">✅ Simpan file, restart aplikasi.</p>
+            </div>
+
+            <div class="mb-6">
+                <h3 class="text-lg font-semibold text-blue-700 mb-2">Metode 2: Via Environment Variable (Sementara)</h3>
+                <p class="mb-2">Jalankan dengan port dinamis dari environment variable <code>PORT</code>:</p>
+                <div class="bg-gray-800 text-green-300 rounded-lg p-4 mb-3 font-mono text-sm overflow-x-auto">
+                    # Windows CMD
+                    set PORT=8080 && python app.py
+
+                    # PowerShell
+                    $env:PORT=8080; python app.py
+                </div>
+                <p class="text-sm text-gray-500">💡 Tidak perlu mengubah file app.py.</p>
+            </div>
+        </div>
+
+        <!-- 2. Setup dan Jalankan -->
+        <div id="setup-jalankan" class="bg-white rounded-lg shadow p-6 mb-8">
+            <h2 class="text-2xl font-bold mb-4">2️⃣ Cara Setup dan Jalankan Program</h2>
+
+            <div class="space-y-4">
+                <div>
+                    <h3 class="text-lg font-semibold text-blue-700 mb-2">📋 Prasyarat</h3>
+                    <ul class="list-disc list-inside space-y-1 text-gray-700">
+                        <li>Python 3.8+ terinstal (<code class="bg-gray-100 px-2 py-0.5 rounded">python --version</code>)</li>
+                        <li>pip terinstal (<code class="bg-gray-100 px-2 py-0.5 rounded">pip --version</code>)</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-semibold text-blue-700 mb-2">⚙️ Langkah Setup</h3>
+                    <ol class="list-decimal list-inside space-y-2 text-gray-700">
+                        <li>
+                            <strong>Buka terminal/command prompt</strong> dan arahkan ke folder project:
+                            <div class="bg-gray-800 text-green-300 rounded-lg p-3 mt-1 font-mono text-sm">
+                                cd C:\Users\prime\Documents\Program_Test_Gudang
+                            </div>
+                        </li>
+                        <li>
+                            <strong>Install dependencies</strong> (Flask + pytest):
+                            <div class="bg-gray-800 text-green-300 rounded-lg p-3 mt-1 font-mono text-sm">
+                                pip install -r requirements.txt
+                            </div>
+                        </li>
+                        <li>
+                            <strong>Jalankan aplikasi:</strong>
+                            <div class="bg-gray-800 text-green-300 rounded-lg p-3 mt-1 font-mono text-sm">
+                                python app.py
+                            </div>
+                        </li>
+                        <li>
+                            <strong>Buka browser</strong> dan akses:
+                            <div class="bg-gray-800 text-green-300 rounded-lg p-3 mt-1 font-mono text-sm">
+                                http://127.0.0.1:5000
+                            </div>
+                        </li>
+                    </ol>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-semibold text-blue-700 mb-2">🧪 Menjalankan Test</h3>
+                    <div class="bg-gray-800 text-green-300 rounded-lg p-3 font-mono text-sm">
+                        python -m pytest tests/ -v
+                    </div>
+                    <p class="text-sm text-gray-500 mt-1">Menjalankan 50 unit test & integration test.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. Project Manager -->
+        <div id="project-manager" class="bg-white rounded-lg shadow p-6 mb-8">
+            <h2 class="text-2xl font-bold mb-4">3️⃣ Cara Setup dan Jalankan di Project Manager (VS Code)</h2>
+
+            <div class="space-y-4">
+                <div>
+                    <h3 class="text-lg font-semibold text-blue-700 mb-2">🔧 Apa itu Project Manager?</h3>
+                    <p class="text-gray-700">Project Manager adalah ekstensi VS Code yang memudahkan menyimpan dan membuka project favorit dengan cepat.</p>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-semibold text-blue-700 mb-2">📥 Install Ekstensi Project Manager</h3>
+                    <ol class="list-decimal list-inside space-y-1 text-gray-700">
+                        <li>Buka VS Code</li>
+                        <li>Tekan <kbd class="bg-gray-200 px-2 py-0.5 rounded">Ctrl+Shift+X</kbd> (Extensions)</li>
+                        <li>Cari <strong>"Project Manager"</strong> (oleh alefragnani)</li>
+                        <li>Klik <strong>Install</strong></li>
+                    </ol>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-semibold text-blue-700 mb-2">➕ Menambahkan Project ke Project Manager</h3>
+                    <ol class="list-decimal list-inside space-y-2 text-gray-700">
+                        <li>Buka folder project <code class="bg-gray-100 px-2 py-0.5 rounded">Program_Test_Gudang</code> di VS Code:
+                            <div class="bg-gray-800 text-green-300 rounded-lg p-3 mt-1 font-mono text-sm">
+                                code C:\Users\prime\Documents\Program_Test_Gudang
+                            </div>
+                        </li>
+                        <li>Tekan <kbd class="bg-gray-200 px-2 py-0.5 rounded">Ctrl+Shift+P</kbd> → ketik <strong>"Project Manager: Save Project"</strong></li>
+                        <li>Beri nama misal: <strong>"Stok Gudang"</strong></li>
+                        <li class="text-sm text-gray-500">💡 Project akan tersimpan dan bisa diakses kapan saja via <kbd class="bg-gray-200 px-2 py-0.5 rounded">Ctrl+Shift+P</kbd> → <strong>"Project Manager: List Projects"</strong></li>
+                    </ol>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-semibold text-blue-700 mb-2">▶️ Menjalankan Aplikasi dari VS Code</h3>
+                    <ol class="list-decimal list-inside space-y-2 text-gray-700">
+                        <li>
+                            Buka terminal di VS Code: <kbd class="bg-gray-200 px-2 py-0.5 rounded">Ctrl+`</kbd>
+                        </li>
+                        <li>
+                            Jalankan perintah:
+                            <div class="bg-gray-800 text-green-300 rounded-lg p-3 mt-1 font-mono text-sm">
+                                python app.py
+                            </div>
+                        </li>
+                        <li>
+                            Atau gunakan <strong>Run and Debug</strong> (<kbd class="bg-gray-200 px-2 py-0.5 rounded">F5</kbd>):
+                            <ul class="list-disc list-inside ml-6 mt-2 text-gray-600">
+                                <li>Buat file <code class="bg-gray-100 px-2 py-0.5 rounded">.vscode/launch.json</code></li>
+                                <li>Pilih konfigurasi <strong>"Python: Flask"</strong></li>
+                            </ul>
+                        </li>
+                    </ol>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-semibold text-blue-700 mb-2">📝 Contoh .vscode/tasks.json (untuk auto-run)</h3>
+                    <div class="bg-gray-800 text-green-300 rounded-lg p-4 font-mono text-sm overflow-x-auto">
+{<br>
+&nbsp;&nbsp;"version": "2.0.0",<br>
+&nbsp;&nbsp;"tasks": [<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"label": "Run Stok Gudang",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"type": "shell",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"command": "python app.py",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"options": {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"cwd": "${workspaceFolder}"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"presentation": {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"panel": "new"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;]<br>
+}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. Pengoperasian -->
+        <div id="pengoperasian" class="bg-white rounded-lg shadow p-6 mb-8">
+            <h2 class="text-2xl font-bold mb-4">4️⃣ Cara Pengoperasian Aplikasi</h2>
+
+            <div class="space-y-6">
+                <!-- Halaman Home -->
+                <div>
+                    <h3 class="text-lg font-semibold text-blue-700 mb-2">🏠 Halaman Utama</h3>
+                    <p class="text-gray-700">Akses <code class="bg-gray-100 px-2 py-0.5 rounded">http://127.0.0.1:5000</code></p>
+                    <ul class="list-disc list-inside mt-1 text-gray-600">
+                        <li>Menampilkan 5 menu: <strong>Jenis, Satuan, Merek, Barang, Stok</strong></li>
+                        <li>Klik salah satu menu untuk masuk ke halaman kelola data</li>
+                    </ul>
+                </div>
+
+                <!-- CRUD Umum -->
+                <div>
+                    <h3 class="text-lg font-semibold text-blue-700 mb-2">📋 Mengelola Data Master (Jenis / Satuan / Merek)</h3>
+                    <p class="text-gray-700 mb-2">Ketiga halaman ini memiliki cara kerja yang <strong>sama persis</strong>:</p>
+                    <ol class="list-decimal list-inside space-y-1 text-gray-700">
+                        <li><strong>Tambah Data</strong>: Isi input "Nama" → klik tombol "Simpan"</li>
+                        <li><strong>Edit Data</strong>: Klik ikon ✏️ pada baris data → ubah nama → klik "Update"</li>
+                        <li><strong>Hapus Data</strong>: Klik ikon 🗑️ → konfirmasi "Yakin hapus?"</li>
+                        <li class="text-sm text-gray-500">💡 Jika nama sudah ada, akan muncul pesan error duplikat.</li>
+                    </ol>
+                </div>
+
+                <!-- Barang -->
+                <div>
+                    <h3 class="text-lg font-semibold text-blue-700 mb-2">📦 Mengelola Barang</h3>
+                    <p class="text-gray-700 mb-2">Barang adalah <strong>kombinasi</strong> dari Jenis + Satuan + Merek:</p>
+                    <ol class="list-decimal list-inside space-y-1 text-gray-700">
+                        <li><strong>Tambah Barang</strong>: Pilih Jenis, Satuan, Merek dari dropdown → klik "Simpan"</li>
+                        <li><strong>Edit Barang</strong>: Klik ✏️ → ubah pilihan dropdown → klik "Update"</li>
+                        <li><strong>Hapus Barang</strong>: Klik 🗑️ → konfirmasi</li>
+                        <li class="text-sm text-gray-500">💡 Pastikan data Jenis, Satuan, dan Merek sudah terisi sebelumnya.</li>
+                        <li class="text-sm text-gray-500">💡 Tabel menampilkan nama relasi (bukan ID) untuk memudahkan.</li>
+                    </ol>
+                </div>
+
+                <!-- Stok -->
+                <div>
+                    <h3 class="text-lg font-semibold text-blue-700 mb-2">📊 Mengelola Stok</h3>
+                    <p class="text-gray-700 mb-2">Mencatat pergerakan stok barang di gudang:</p>
+                    <ol class="list-decimal list-inside space-y-1 text-gray-700">
+                        <li><strong>Tambah Stok</strong>: Pilih Barang dari dropdown → isi Jumlah → klik "Simpan"</li>
+                        <li class="ml-6 text-sm text-gray-500">Tanggal & waktu akan terisi otomatis.</li>
+                        <li><strong>Edit Stok</strong>: Klik ✏️ → ubah barang/jumlah → klik "Update"</li>
+                        <li><strong>Hapus Stok</strong>: Klik 🗑️ → konfirmasi</li>
+                        <li class="text-sm text-gray-500">💡 Jumlah stok harus lebih dari 0.</li>
+                        <li class="text-sm text-gray-500">💡 Nama barang di tabel menampilkan format: <em>Jenis - Merek (Satuan)</em></li>
+                    </ol>
+                </div>
+
+                <!-- Flash Messages -->
+                <div>
+                    <h3 class="text-lg font-semibold text-blue-700 mb-2">💬 Notifikasi (Flash Messages)</h3>
+                    <p class="text-gray-700">Setiap aksi akan menampilkan notifikasi di bagian atas halaman:</p>
+                    <ul class="list-disc list-inside mt-1 space-y-1">
+                        <li><span class="bg-green-100 text-green-800 px-2 py-0.5 rounded">✅ Hijau</span> = Aksi berhasil</li>
+                        <li><span class="bg-red-100 text-red-800 px-2 py-0.5 rounded">❌ Merah</span> = Aksi gagal (beserta penyebabnya)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. Struktur Folder -->
+        <div id="struktur-folder" class="bg-white rounded-lg shadow p-6 mb-8">
+            <h2 class="text-2xl font-bold mb-4">📁 Struktur Folder</h2>
+            <div class="bg-gray-800 text-green-300 rounded-lg p-4 font-mono text-sm overflow-x-auto">
+Program_Test_Gudang/<br>
+│<br>
+├── <span class="text-yellow-300">app.py</span>              # Entry point Flask<br>
+├── <span class="text-yellow-300">config.py</span>            # Konfigurasi database<br>
+├── <span class="text-yellow-300">requirements.txt</span>      # Dependencies<br>
+├── <span class="text-yellow-300">gudang.db</span>            # Database SQLite (auto-generated)<br>
+│<br>
+├── <span class="text-purple-300">model/</span><br>
+│   ├── entity.py          # Dataclass entity<br>
+│   └── database.py        # Koneksi & inisialisasi DB<br>
+│<br>
+├── <span class="text-purple-300">dto/</span><br>
+│   └── request_dto.py     # Validasi input<br>
+│<br>
+├── <span class="text-purple-300">repository/</span><br>
+│   ├── base_repository.py # Abstract base class<br>
+│   ├── satuan_repository.py<br>
+│   ├── jenis_repository.py<br>
+│   ├── merek_repository.py<br>
+│   ├── barang_repository.py<br>
+│   └── stok_repository.py<br>
+│<br>
+├── <span class="text-purple-300">service/</span><br>
+│   ├── satuan_service.py<br>
+│   ├── jenis_service.py<br>
+│   ├── merek_service.py<br>
+│   ├── barang_service.py<br>
+│   └── stok_service.py<br>
+│<br>
+├── <span class="text-purple-300">route/</span><br>
+│   ├── satuan_bp.py       # Blueprint Satuan<br>
+│   ├── jenis_bp.py        # Blueprint Jenis<br>
+│   ├── merek_bp.py        # Blueprint Merek<br>
+│   ├── barang_bp.py       # Blueprint Barang<br>
+│   └── stok_bp.py         # Blueprint Stok<br>
+│<br>
+├── <span class="text-purple-300">templates/</span><br>
+│   ├── base.html          # Layout utama (Tailwind CSS)<br>
+│   ├── home.html          # Halaman beranda<br>
+│   ├── <span class="text-orange-300">satuan/</span>index.html<br>
+│   ├── <span class="text-orange-300">jenis/</span>index.html<br>
+│   ├── <span class="text-orange-300">merek/</span>index.html<br>
+│   ├── <span class="text-orange-300">barang/</span>index.html<br>
+│   └── <span class="text-orange-300">stok/</span>index.html<br>
+│<br>
+└── <span class="text-purple-300">tests/</span><br>
+    ├── conftest.py         # Fixture database test<br>
+    ├── test_satuan_repository.py<br>
+    ├── test_jenis_repository.py<br>
+    ├── test_merek_repository.py<br>
+    ├── test_barang_repository.py<br>
+    ├── test_stok_repository.py<br>
+    ├── test_satuan_service.py<br>
+    ├── test_jenis_service.py<br>
+    ├── test_merek_service.py<br>
+    ├── test_barang_service.py<br>
+    ├── test_stok_service.py<br>
+    └── test_integration.py # Integration test full flow
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="text-center text-gray-400 text-sm py-4">
+            &copy; 2024 Aplikasi Stok Gudang - Python Flask + SQLite + Tailwind CSS
+        </div>
+    </div>
+</body>
+</html>
