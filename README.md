@@ -32,17 +32,61 @@ Program_Test_Gudang/
 ├── app.py                 # Entry point Flask
 ├── config.py              # Konfigurasi database
 ├── requirements.txt       # Dependencies
-├── ecosystem.config.js    # PM2 configuration
 ├── gudang.db              # Database SQLite (auto-generated)
 │
 ├── model/                 # Entity & Database layer
+│   ├── entity.py          # Dataclass: Satuan, Jenis, Merek, Barang, Stok
+│   └── database.py        # Koneksi SQLite, inisialisasi tabel
+│
 ├── dto/                   # Data Transfer Object
-├── repository/            # Data Access Layer (5 modules)
-├── service/               # Business Logic Layer (5 modules)
-├── route/                 # HTTP Layer - Flask Blueprint (5 modules)
+│   └── request_dto.py     # Validasi input (NamaRequest, BarangRequest, StokRequest)
+│
+├── repository/            # Data Access Layer
+│   ├── base_repository.py # Abstract base class
+│   ├── satuan_repository.py
+│   ├── jenis_repository.py
+│   ├── merek_repository.py
+│   ├── barang_repository.py
+│   └── stok_repository.py
+│
+├── service/               # Business Logic Layer
+│   ├── satuan_service.py
+│   ├── jenis_service.py
+│   ├── merek_service.py
+│   ├── barang_service.py
+│   └── stok_service.py
+│
+├── route/                 # HTTP Layer (Flask Blueprint)
+│   ├── satuan_bp.py
+│   ├── jenis_bp.py
+│   ├── merek_bp.py
+│   ├── barang_bp.py
+│   └── stok_bp.py
+│
 ├── templates/             # HTML Templates (Jinja2 + Tailwind)
-└── tests/                 # 50 Unit & Integration Tests
+│   ├── base.html
+│   ├── home.html
+│   ├── satuan/index.html
+│   ├── jenis/index.html
+│   ├── merek/index.html
+│   ├── barang/index.html
+│   └── stok/index.html
+│
+└── tests/                 # Unit & Integration Tests
+    ├── conftest.py
+    ├── test_satuan_repository.py
+    ├── test_jenis_repository.py
+    ├── test_merek_repository.py
+    ├── test_barang_repository.py
+    ├── test_stok_repository.py
+    ├── test_satuan_service.py
+    ├── test_jenis_service.py
+    ├── test_merek_service.py
+    ├── test_barang_service.py
+    ├── test_stok_service.py
+    └── test_integration.py
 ```
+
 
 ## 🗄️ Database Schema
 
