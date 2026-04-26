@@ -20,7 +20,9 @@
             <ol class="list-decimal list-inside space-y-2 text-blue-600">
                 <li><a href="#cara-setting-port" class="hover:underline">Cara Setting Port Aplikasi</a></li>
                 <li><a href="#setup-jalankan" class="hover:underline">Cara Setup dan Jalankan Program</a></li>
-                <li><a href="#project-manager" class="hover:underline">Cara Setup dan Jalankan di Project Manager (VS Code)</a></li>
+                <li><a href="#virtual-env" class="hover:underline">Cara Setup Virtual Environment (venv)</a></li>
+                <li><a href="#pm2" class="hover:underline">Cara Setup dan Jalankan dengan PM2</a></li>
+                <li><a href="#env-terbatas" class="hover:underline">Menjalankan di Environment Terbatas</a></li>
                 <li><a href="#pengoperasian" class="hover:underline">Cara Pengoperasian Aplikasi</a></li>
                 <li><a href="#struktur-folder" class="hover:underline">Struktur Folder</a></li>
             </ol>
@@ -33,27 +35,31 @@
             <div class="mb-6">
                 <h3 class="text-lg font-semibold text-blue-700 mb-2">Metode 1: Ubah di File app.py (Permanen)</h3>
                 <p class="mb-2">Buka file <code class="bg-gray-100 px-2 py-1 rounded text-red-600">app.py</code> dan cari baris terakhir:</p>
-                <div class="bg-gray-800 text-green-300 rounded-lg p-4 mb-3 font-mono text-sm overflow-x-auto">
-                    app.run(debug=True, host="0.0.0.0", port=<span class="text-yellow-300">5000</span>)
-                </div>
+                <div class="bg-gray-800 text-green-300 rounded-lg p-4 mb-3 font-mono text-sm overflow-x-auto whitespace-pre-wrap">port = int(os.environ.get("PORT", <span class="text-yellow-300">5000</span>))</div>
                 <p class="mb-2">Ubah angka <strong>5000</strong> menjadi port yang diinginkan, misal <strong>8080</strong>:</p>
-                <div class="bg-gray-800 text-green-300 rounded-lg p-4 mb-3 font-mono text-sm overflow-x-auto">
-                    app.run(debug=True, host="0.0.0.0", port=<span class="text-yellow-300">8080</span>)
-                </div>
+                <div class="bg-gray-800 text-green-300 rounded-lg p-4 mb-3 font-mono text-sm overflow-x-auto whitespace-pre-wrap">port = int(os.environ.get("PORT", <span class="text-yellow-300">8080</span>))</div>
                 <p class="text-sm text-gray-500">✅ Simpan file, restart aplikasi.</p>
             </div>
 
             <div class="mb-6">
-                <h3 class="text-lg font-semibold text-blue-700 mb-2">Metode 2: Via Environment Variable (Sementara)</h3>
-                <p class="mb-2">Jalankan dengan port dinamis dari environment variable <code>PORT</code>:</p>
-                <div class="bg-gray-800 text-green-300 rounded-lg p-4 mb-3 font-mono text-sm overflow-x-auto">
-                    # Windows CMD
-                    set PORT=8080 && python app.py
+                <h3 class="text-lg font-semibold text-blue-700 mb-2">Metode 2: Via Environment Variable PORT</h3>
+                <p class="mb-2">Jalankan dengan port dinamis tanpa mengubah kode:</p>
+                <div class="bg-gray-800 text-green-300 rounded-lg p-4 mb-3 font-mono text-sm overflow-x-auto whitespace-pre-wrap"># Windows CMD
+set PORT=8080 && python app.py
 
-                    # PowerShell
-                    $env:PORT=8080; python app.py
-                </div>
-                <p class="text-sm text-gray-500">💡 Tidak perlu mengubah file app.py.</p>
+# PowerShell
+$env:PORT=8080; python app.py
+
+# Linux/Mac Bash
+PORT=8080 python app.py</div>
+                <p class="text-sm text-gray-500">💡 Environment variable PORT akan override nilai default di app.py.</p>
+            </div>
+
+            <div class="mb-6">
+                <h3 class="text-lg font-semibold text-blue-700 mb-2">Metode 3: Via PM2 ecosystem.config.js</h3>
+                <p class="mb-2">Atur port di file <code class="bg-gray-100 px-2 py-0.5 rounded">ecosystem.config.js</code>:</p>
+                <div class="bg-gray-800 text-green-300 rounded-lg p-4 mb-3 font-mono text-sm overflow-x-auto whitespace-pre-wrap">env: { PORT: 8080 }</div>
+                <p class="text-sm text-gray-500">💡 Lihat panduan PM2 di bawah.</p>
             </div>
         </div>
 
@@ -75,124 +81,323 @@
                     <ol class="list-decimal list-inside space-y-2 text-gray-700">
                         <li>
                             <strong>Buka terminal/command prompt</strong> dan arahkan ke folder project:
-                            <div class="bg-gray-800 text-green-300 rounded-lg p-3 mt-1 font-mono text-sm">
-                                cd C:\Users\prime\Documents\Program_Test_Gudang
-                            </div>
+                            <div class="bg-gray-800 text-green-300 rounded-lg p-3 mt-1 font-mono text-sm whitespace-pre-wrap">cd C:\Users\prime\Documents\Program_Test_Gudang</div>
                         </li>
                         <li>
                             <strong>Install dependencies</strong> (Flask + pytest):
-                            <div class="bg-gray-800 text-green-300 rounded-lg p-3 mt-1 font-mono text-sm">
-                                pip install -r requirements.txt
-                            </div>
+                            <div class="bg-gray-800 text-green-300 rounded-lg p-3 mt-1 font-mono text-sm whitespace-pre-wrap">pip install -r requirements.txt</div>
                         </li>
                         <li>
                             <strong>Jalankan aplikasi:</strong>
-                            <div class="bg-gray-800 text-green-300 rounded-lg p-3 mt-1 font-mono text-sm">
-                                python app.py
-                            </div>
+                            <div class="bg-gray-800 text-green-300 rounded-lg p-3 mt-1 font-mono text-sm whitespace-pre-wrap">python app.py</div>
                         </li>
                         <li>
                             <strong>Buka browser</strong> dan akses:
-                            <div class="bg-gray-800 text-green-300 rounded-lg p-3 mt-1 font-mono text-sm">
-                                http://127.0.0.1:5000
-                            </div>
+                            <div class="bg-gray-800 text-green-300 rounded-lg p-3 mt-1 font-mono text-sm whitespace-pre-wrap">http://127.0.0.1:5000</div>
                         </li>
+                        <li class="text-sm text-gray-500">💡 Tekan <kbd class="bg-gray-200 px-1 rounded">Ctrl+C</kbd> untuk stop.</li>
                     </ol>
                 </div>
 
                 <div>
                     <h3 class="text-lg font-semibold text-blue-700 mb-2">🧪 Menjalankan Test</h3>
-                    <div class="bg-gray-800 text-green-300 rounded-lg p-3 font-mono text-sm">
-                        python -m pytest tests/ -v
-                    </div>
+                    <div class="bg-gray-800 text-green-300 rounded-lg p-3 font-mono text-sm whitespace-pre-wrap">python -m pytest tests/ -v</div>
                     <p class="text-sm text-gray-500 mt-1">Menjalankan 50 unit test & integration test.</p>
                 </div>
             </div>
         </div>
 
-        <!-- 3. Project Manager -->
-        <div id="project-manager" class="bg-white rounded-lg shadow p-6 mb-8">
-            <h2 class="text-2xl font-bold mb-4">3️⃣ Cara Setup dan Jalankan di Project Manager (VS Code)</h2>
+        <!-- 3. Virtual Environment -->
+        <div id="virtual-env" class="bg-white rounded-lg shadow p-6 mb-8">
+            <h2 class="text-2xl font-bold mb-4">3️⃣ Cara Setup Virtual Environment (venv)</h2>
+
+            <p class="text-gray-700 mb-4">Virtual environment digunakan untuk mengisolasi dependensi Python proyek agar tidak tercampur dengan instalasi global.</p>
 
             <div class="space-y-4">
                 <div>
-                    <h3 class="text-lg font-semibold text-blue-700 mb-2">🔧 Apa itu Project Manager?</h3>
-                    <p class="text-gray-700">Project Manager adalah ekstensi VS Code yang memudahkan menyimpan dan membuka project favorit dengan cepat.</p>
+                    <h3 class="text-lg font-semibold text-blue-700 mb-2">🪟 Windows</h3>
+                    <div class="bg-gray-800 text-green-300 rounded-lg p-3 font-mono text-sm overflow-x-auto whitespace-pre-wrap"># Buat virtual environment
+python -m venv venv
+
+# Aktifkan
+venv\Scripts\activate
+
+# Install dependencies di dalam venv
+pip install -r requirements.txt
+
+# Jalankan aplikasi
+python app.py
+
+# Nonaktifkan venv (setelah selesai)
+deactivate</div>
                 </div>
 
                 <div>
-                    <h3 class="text-lg font-semibold text-blue-700 mb-2">📥 Install Ekstensi Project Manager</h3>
-                    <ol class="list-decimal list-inside space-y-1 text-gray-700">
-                        <li>Buka VS Code</li>
-                        <li>Tekan <kbd class="bg-gray-200 px-2 py-0.5 rounded">Ctrl+Shift+X</kbd> (Extensions)</li>
-                        <li>Cari <strong>"Project Manager"</strong> (oleh alefragnani)</li>
-                        <li>Klik <strong>Install</strong></li>
-                    </ol>
+                    <h3 class="text-lg font-semibold text-blue-700 mb-2">🐧 Linux / Mac</h3>
+                    <div class="bg-gray-800 text-green-300 rounded-lg p-3 font-mono text-sm overflow-x-auto whitespace-pre-wrap"># Buat virtual environment
+python3 -m venv venv
+
+# Aktifkan
+source venv/bin/activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Jalankan
+python app.py
+
+# Nonaktifkan
+deactivate</div>
                 </div>
 
                 <div>
-                    <h3 class="text-lg font-semibold text-blue-700 mb-2">➕ Menambahkan Project ke Project Manager</h3>
-                    <ol class="list-decimal list-inside space-y-2 text-gray-700">
-                        <li>Buka folder project <code class="bg-gray-100 px-2 py-0.5 rounded">Program_Test_Gudang</code> di VS Code:
-                            <div class="bg-gray-800 text-green-300 rounded-lg p-3 mt-1 font-mono text-sm">
-                                code C:\Users\prime\Documents\Program_Test_Gudang
-                            </div>
-                        </li>
-                        <li>Tekan <kbd class="bg-gray-200 px-2 py-0.5 rounded">Ctrl+Shift+P</kbd> → ketik <strong>"Project Manager: Save Project"</strong></li>
-                        <li>Beri nama misal: <strong>"Stok Gudang"</strong></li>
-                        <li class="text-sm text-gray-500">💡 Project akan tersimpan dan bisa diakses kapan saja via <kbd class="bg-gray-200 px-2 py-0.5 rounded">Ctrl+Shift+P</kbd> → <strong>"Project Manager: List Projects"</strong></li>
-                    </ol>
+                    <h3 class="text-lg font-semibold text-blue-700 mb-2">🤖 Menggunakan venv dengan PM2</h3>
+                    <div class="bg-gray-800 text-green-300 rounded-lg p-3 font-mono text-sm overflow-x-auto whitespace-pre-wrap"># Pastikan PM2 menggunakan interpreter dari dalam venv:
+pm2 start ecosystem.config.js \
+  --interpreter venv\Scripts\python   # Windows
+
+pm2 start ecosystem.config.js \
+  --interpreter venv/bin/python       # Linux/Mac</div>
+                    <p class="text-sm text-gray-500 mt-1">💡 Atau update <code class="bg-gray-100 px-1 rounded">interpreter</code> di ecosystem.config.js.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. PM2 -->
+        <div id="pm2" class="bg-white rounded-lg shadow p-6 mb-8">
+            <h2 class="text-2xl font-bold mb-4">4️⃣ Cara Setup dan Jalankan dengan PM2</h2>
+
+            <div class="space-y-4">
+                <div>
+                    <h3 class="text-lg font-semibold text-blue-700 mb-2">🔧 Apa itu PM2?</h3>
+                    <p class="text-gray-700"><strong>PM2</strong> (Process Manager 2) adalah <em>process manager</em> untuk Node.js, tetapi juga bisa menjalankan aplikasi Python. PM2 menjaga aplikasi tetap <strong>berjalan di background</strong>, melakukan <strong>auto-restart</strong> jika crash, dan menyediakan <strong>load balancing</strong> serta <strong>logging</strong> terpusat.</p>
                 </div>
 
                 <div>
-                    <h3 class="text-lg font-semibold text-blue-700 mb-2">▶️ Menjalankan Aplikasi dari VS Code</h3>
-                    <ol class="list-decimal list-inside space-y-2 text-gray-700">
-                        <li>
-                            Buka terminal di VS Code: <kbd class="bg-gray-200 px-2 py-0.5 rounded">Ctrl+`</kbd>
-                        </li>
-                        <li>
-                            Jalankan perintah:
-                            <div class="bg-gray-800 text-green-300 rounded-lg p-3 mt-1 font-mono text-sm">
-                                python app.py
-                            </div>
-                        </li>
-                        <li>
-                            Atau gunakan <strong>Run and Debug</strong> (<kbd class="bg-gray-200 px-2 py-0.5 rounded">F5</kbd>):
-                            <ul class="list-disc list-inside ml-6 mt-2 text-gray-600">
-                                <li>Buat file <code class="bg-gray-100 px-2 py-0.5 rounded">.vscode/launch.json</code></li>
-                                <li>Pilih konfigurasi <strong>"Python: Flask"</strong></li>
-                            </ul>
-                        </li>
-                    </ol>
+                    <h3 class="text-lg font-semibold text-blue-700 mb-2">📥 Install PM2</h3>
+                    <p class="mb-2">PM2 membutuhkan Node.js. Install lewat npm:</p>
+                    <div class="bg-gray-800 text-green-300 rounded-lg p-3 mb-2 font-mono text-sm overflow-x-auto whitespace-pre-wrap">npm install -g pm2</div>
+                    <p class="text-sm text-gray-500">💡 Cek instalasi: <code class="bg-gray-100 px-1 rounded">pm2 --version</code></p>
                 </div>
 
                 <div>
-                    <h3 class="text-lg font-semibold text-blue-700 mb-2">📝 Contoh .vscode/tasks.json (untuk auto-run)</h3>
-                    <div class="bg-gray-800 text-green-300 rounded-lg p-4 font-mono text-sm overflow-x-auto">
-{<br>
-&nbsp;&nbsp;"version": "2.0.0",<br>
-&nbsp;&nbsp;"tasks": [<br>
-&nbsp;&nbsp;&nbsp;&nbsp;{<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"label": "Run Stok Gudang",<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"type": "shell",<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"command": "python app.py",<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"options": {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"cwd": "${workspaceFolder}"<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"presentation": {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"panel": "new"<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
-&nbsp;&nbsp;&nbsp;&nbsp;}<br>
-&nbsp;&nbsp;]<br>
-}
+                    <h3 class="text-lg font-semibold text-blue-700 mb-2">🚀 Menjalankan Aplikasi dengan PM2</h3>
+                    <p class="mb-2">Gunakan file <code class="bg-gray-100 px-2 py-0.5 rounded">ecosystem.config.js</code> yang sudah disediakan:</p>
+                    <div class="bg-gray-800 text-green-300 rounded-lg p-3 mb-3 font-mono text-sm overflow-x-auto whitespace-pre-wrap">cd C:\Users\prime\Documents\Program_Test_Gudang
+
+# Start aplikasi
+pm2 start ecosystem.config.js
+
+# Atau langsung tanpa file config
+pm2 start app.py --interpreter python --name stok-gudang</div>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-semibold text-blue-700 mb-2">📋 Perintah Dasar PM2</h3>
+                    <div class="bg-gray-800 text-green-300 rounded-lg p-3 mb-3 font-mono text-sm overflow-x-auto whitespace-pre-wrap">pm2 status               # Lihat status semua proses
+pm2 list                 # Sama dengan status
+
+pm2 logs stok-gudang     # Lihat log aplikasi (realtime)
+pm2 logs stok-gudang --lines 100  # 100 baris terakhir
+
+pm2 stop stok-gudang     # Stop aplikasi
+pm2 restart stok-gudang  # Restart aplikasi
+pm2 delete stok-gudang   # Hapus dari daftar PM2
+
+pm2 monit                # Monitor CPU/Memory (interaktif)
+pm2 show stok-gudang     # Detail proses</div>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-semibold text-blue-700 mb-2">🔄 Auto-start Saat Reboot (Production)</h3>
+                    <p class="mb-2">Agar aplikasi otomatis hidup saat komputer/server restart:</p>
+                    <div class="bg-gray-800 text-green-300 rounded-lg p-3 mb-3 font-mono text-sm overflow-x-auto whitespace-pre-wrap"># Simpan daftar proses
+pm2 save
+
+# Generate startup script
+pm2 startup</div>
+                    <p class="mb-2"><strong>Di Windows:</strong></p>
+                    <ul class="list-disc list-inside space-y-1 text-gray-700 ml-4">
+                        <li>PM2 startup di Windows memerlukan <strong>pm2-installer</strong> atau service manager</li>
+                        <li>Alternatif: buat <strong>Task Scheduler</strong> Windows untuk menjalankan <code class="bg-gray-100 px-1 rounded">pm2 start ecosystem.config.js</code></li>
+                        <li>Atau gunakan <strong>nssm</strong> (Non-Sucking Service Manager) untuk daftarkan <code class="bg-gray-100 px-1 rounded">python app.py</code> sebagai Windows Service</li>
+                    </ul>
+                    <div class="bg-yellow-50 border-l-4 border-yellow-400 p-3 mt-2 text-sm text-yellow-800">
+                        ⚠️ <strong>Catatan:</strong> <code class="bg-yellow-100 px-1 rounded">pm2 startup</code> berfungsi penuh di Linux/Mac. Di Windows, gunakan alternatif di atas.
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-semibold text-blue-700 mb-2">📝 Mengatur Port di ecosystem.config.js</h3>
+                    <div class="bg-gray-800 text-green-300 rounded-lg p-4 mb-3 font-mono text-sm overflow-x-auto whitespace-pre-wrap">module.exports = {
+    apps: [{
+        name: "stok-gudang",
+        script: "app.py",
+        interpreter: "python",
+
+        // Environment variable PORT akan override default di app.py
+        env: {
+            PORT: 5000
+        },
+
+        // Ganti port untuk mode production
+        env_production: {
+            PORT: 8080
+        },
+
+        watch: false,
+        autorestart: true,
+        max_memory_restart: "200M"
+    }]
+};
+
+# Jalankan dengan environment tertentu
+pm2 start ecosystem.config.js                    # pakai env
+pm2 start ecosystem.config.js --env production   # pakai env_production</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. Environment Terbatas -->
+        <div id="env-terbatas" class="bg-white rounded-lg shadow p-6 mb-8">
+            <h2 class="text-2xl font-bold mb-4">5️⃣ Menjalankan di Environment Terbatas</h2>
+
+            <div class="space-y-6">
+                <div>
+                    <h3 class="text-lg font-semibold text-blue-700 mb-2">📡 5.1. Tanpa Koneksi Internet (Offline)</h3>
+                    <p class="mb-2">Jika server tidak memiliki akses internet, siapkan <em>offline packages</em> dari komputer yang terhubung internet:</p>
+
+                    <p class="font-medium mt-3">Langkah 1: Download packages di komputer yang ada internet</p>
+                    <div class="bg-gray-800 text-green-300 rounded-lg p-3 mb-2 font-mono text-sm overflow-x-auto whitespace-pre-wrap"># Buat folder untuk menyimpan packages
+mkdir offline_packages
+
+# Download semua dependencies beserta dependensinya
+pip download -r requirements.txt \
+  -d offline_packages</div>
+
+                    <p class="font-medium mt-3">Langkah 2: Copy folder <code class="bg-gray-100 px-1 rounded">offline_packages</code> ke server offline</p>
+
+                    <p class="font-medium mt-3">Langkah 3: Install dari folder local di server offline</p>
+                    <div class="bg-gray-800 text-green-300 rounded-lg p-3 mb-2 font-mono text-sm overflow-x-auto whitespace-pre-wrap"># Install tanpa internet
+pip install --no-index \
+  --find-links ./offline_packages \
+  -r requirements.txt
+
+# Atau install satu per satu
+pip install --no-index \
+  --find-links ./offline_packages \
+  flask pytest</div>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-semibold text-blue-700 mb-2">🔒 5.2. Port Terbatas (Firewall)</h3>
+                    <p class="mb-2">Jika hanya port tertentu yang diizinkan oleh firewall/IT:</p>
+                    <div class="bg-gray-800 text-green-300 rounded-lg p-3 mb-2 font-mono text-sm overflow-x-auto whitespace-pre-wrap"># Cari port yang tersedia (contoh: 8080, 3000, 8000)
+netstat -ano | findstr :8080   # Windows
+ss -tlnp | grep :8080          # Linux
+
+# Set port yang diizinkan
+set PORT=8080 && python app.py  # Windows
+PORT=8080 python app.py         # Linux
+
+# Atau via PM2
+pm2 start ecosystem.config.js --env production</div>
+                    <div class="bg-yellow-50 border-l-4 border-yellow-400 p-3 mt-2 text-sm text-yellow-800">
+                        💡 Jika menggunakan <strong>reverse proxy</strong> (Nginx/Apache/IIS), cukup set port internal seperti 5000, lalu proxy dari port 80/443.
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-semibold text-blue-700 mb-2">💾 5.3. Resource Terbatas (RAM/CPU Rendah)</h3>
+                    <p class="mb-2">Untuk VPS atau server dengan RAM minimal (512MB - 1GB):</p>
+                    <ul class="list-disc list-inside space-y-1 text-gray-700">
+                        <li><strong>Gunakan production WSGI server</strong> (lebih hemat dari Flask dev server):</li>
+                    </ul>
+                    <div class="bg-gray-800 text-green-300 rounded-lg p-3 mt-1 mb-2 font-mono text-sm overflow-x-auto whitespace-pre-wrap"># Install waitress (ringan, native Python, no C compiler needed)
+pip install waitress
+
+# Jalankan dengan waitress
+python -c "
+from waitress import serve
+from app import app
+import os
+port = int(os.environ.get('PORT', 5000))
+serve(app, host='0.0.0.0', port=port)
+"</div>
+                    <ul class="list-disc list-inside space-y-1 text-gray-700">
+                        <li><strong>Matikan debug mode</strong> di app.py: <code class="bg-gray-100 px-1 rounded">app.run(debug=False, host="0.0.0.0", port=port)</code></li>
+                        <li><strong>Batasi memory PM2</strong>: <code class="bg-gray-100 px-1 rounded">max_memory_restart: "100M"</code></li>
+                        <li><strong>Gunakan SQLite</strong> (sudah default) — lebih ringan dari PostgreSQL/MySQL</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-semibold text-blue-700 mb-2">🛡️ 5.4. Tanpa Hak Admin (No Admin/Sudo)</h3>
+                    <p class="mb-2">Jika tidak punya hak admin di server:</p>
+                    <ul class="list-disc list-inside space-y-1 text-gray-700">
+                        <li><strong>Python user install</strong> (--user flag):</li>
+                    </ul>
+                    <div class="bg-gray-800 text-green-300 rounded-lg p-3 mt-1 mb-2 font-mono text-sm overflow-x-auto whitespace-pre-wrap"># Install tanpa admin (hanya untuk user)
+pip install --user -r requirements.txt</div>
+                    <ul class="list-disc list-inside space-y-1 text-gray-700">
+                        <li><strong>PM2 lokal install</strong> (tanpa -g global):</li>
+                    </ul>
+                    <div class="bg-gray-800 text-green-300 rounded-lg p-3 mt-1 mb-2 font-mono text-sm overflow-x-auto whitespace-pre-wrap"># Install PM2 lokal di folder project
+npm install pm2
+
+# Jalankan dari node_modules
+npx pm2 start ecosystem.config.js</div>
+                    <ul class="list-disc list-inside space-y-1 text-gray-700">
+                        <li><strong>Virtual environment</strong> di folder user (tanpa perlu akses system):</li>
+                    </ul>
+                    <div class="bg-gray-800 text-green-300 rounded-lg p-3 mt-1 mb-2 font-mono text-sm overflow-x-auto whitespace-pre-wrap">python -m venv venv
+venv\Scripts\activate     # Windows
+pip install -r requirements.txt
+python app.py</div>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-semibold text-blue-700 mb-2">🌐 5.5. Reverse Proxy (Nginx/Apache/IIS)</h3>
+                    <p class="mb-2">Untuk production, jalankan Flask di internal port, lalu proxy dari web server:</p>
+
+                    <p class="font-medium mt-3">Contoh Nginx:</p>
+                    <div class="bg-gray-800 text-green-300 rounded-lg p-3 mb-2 font-mono text-sm overflow-x-auto whitespace-pre-wrap">server {
+    listen 80;
+    server_name gudang.example.com;
+
+    location / {
+        proxy_pass http://127.0.0.1:5000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+    }
+}</div>
+
+                    <p class="font-medium mt-3">Contoh IIS (URL Rewrite):</p>
+                    <div class="bg-gray-800 text-green-300 rounded-lg p-3 font-mono text-sm overflow-x-auto whitespace-pre-wrap"># Install ARR (Application Request Routing) dan URL Rewrite
+# Buat Reverse Proxy Rule → 127.0.0.1:5000</div>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-semibold text-blue-700 mb-2">📦 5.6. Deploy ke Production (Checklist)</h3>
+                    <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                        <ul class="space-y-2 text-gray-700">
+                            <li>✅ <strong>Non-aktifkan debug mode</strong> di app.py</li>
+                            <li>✅ <strong>Ganti secret_key</strong> dengan key yang aman & random</li>
+                            <li>✅ <strong>Gunakan production WSGI</strong> (waitress/gunicorn)</li>
+                            <li>✅ <strong>Set port</strong> sesuai environment</li>
+                            <li>✅ <strong>PM2</strong> untuk auto-restart & monitoring</li>
+                            <li>✅ <strong>Reverse proxy</strong> (Nginx/Apache/IIS) untuk akses publik</li>
+                            <li>✅ <strong>Firewall</strong> — blokir akses langsung ke port Flask</li>
+                            <li>✅ <strong>Backup database</strong> <code class="bg-gray-100 px-1 rounded">gudang.db</code> secara berkala</li>
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- 4. Pengoperasian -->
+        <!-- 6. Pengoperasian -->
         <div id="pengoperasian" class="bg-white rounded-lg shadow p-6 mb-8">
-            <h2 class="text-2xl font-bold mb-4">4️⃣ Cara Pengoperasian Aplikasi</h2>
+            <h2 class="text-2xl font-bold mb-4">6️⃣ Cara Pengoperasian Aplikasi</h2>
 
             <div class="space-y-6">
                 <!-- Halaman Home -->
@@ -256,69 +461,72 @@
             </div>
         </div>
 
-        <!-- 5. Struktur Folder -->
+        <!-- 7. Struktur Folder -->
         <div id="struktur-folder" class="bg-white rounded-lg shadow p-6 mb-8">
             <h2 class="text-2xl font-bold mb-4">📁 Struktur Folder</h2>
-            <div class="bg-gray-800 text-green-300 rounded-lg p-4 font-mono text-sm overflow-x-auto">
-Program_Test_Gudang/<br>
-│<br>
-├── <span class="text-yellow-300">app.py</span>              # Entry point Flask<br>
-├── <span class="text-yellow-300">config.py</span>            # Konfigurasi database<br>
-├── <span class="text-yellow-300">requirements.txt</span>      # Dependencies<br>
-├── <span class="text-yellow-300">gudang.db</span>            # Database SQLite (auto-generated)<br>
-│<br>
-├── <span class="text-purple-300">model/</span><br>
-│   ├── entity.py          # Dataclass entity<br>
-│   └── database.py        # Koneksi & inisialisasi DB<br>
-│<br>
-├── <span class="text-purple-300">dto/</span><br>
-│   └── request_dto.py     # Validasi input<br>
-│<br>
-├── <span class="text-purple-300">repository/</span><br>
-│   ├── base_repository.py # Abstract base class<br>
-│   ├── satuan_repository.py<br>
-│   ├── jenis_repository.py<br>
-│   ├── merek_repository.py<br>
-│   ├── barang_repository.py<br>
-│   └── stok_repository.py<br>
-│<br>
-├── <span class="text-purple-300">service/</span><br>
-│   ├── satuan_service.py<br>
-│   ├── jenis_service.py<br>
-│   ├── merek_service.py<br>
-│   ├── barang_service.py<br>
-│   └── stok_service.py<br>
-│<br>
-├── <span class="text-purple-300">route/</span><br>
-│   ├── satuan_bp.py       # Blueprint Satuan<br>
-│   ├── jenis_bp.py        # Blueprint Jenis<br>
-│   ├── merek_bp.py        # Blueprint Merek<br>
-│   ├── barang_bp.py       # Blueprint Barang<br>
-│   └── stok_bp.py         # Blueprint Stok<br>
-│<br>
-├── <span class="text-purple-300">templates/</span><br>
-│   ├── base.html          # Layout utama (Tailwind CSS)<br>
-│   ├── home.html          # Halaman beranda<br>
-│   ├── <span class="text-orange-300">satuan/</span>index.html<br>
-│   ├── <span class="text-orange-300">jenis/</span>index.html<br>
-│   ├── <span class="text-orange-300">merek/</span>index.html<br>
-│   ├── <span class="text-orange-300">barang/</span>index.html<br>
-│   └── <span class="text-orange-300">stok/</span>index.html<br>
-│<br>
-└── <span class="text-purple-300">tests/</span><br>
-    ├── conftest.py         # Fixture database test<br>
-    ├── test_satuan_repository.py<br>
-    ├── test_jenis_repository.py<br>
-    ├── test_merek_repository.py<br>
-    ├── test_barang_repository.py<br>
-    ├── test_stok_repository.py<br>
-    ├── test_satuan_service.py<br>
-    ├── test_jenis_service.py<br>
-    ├── test_merek_service.py<br>
-    ├── test_barang_service.py<br>
-    ├── test_stok_service.py<br>
-    └── test_integration.py # Integration test full flow
-            </div>
+            <div class="bg-gray-800 text-green-300 rounded-lg p-4 font-mono text-sm overflow-x-auto whitespace-pre">Program_Test_Gudang/
+│
+├── <span class="text-yellow-300">app.py</span>              # Entry point Flask
+├── <span class="text-yellow-300">config.py</span>            # Konfigurasi database
+├── <span class="text-yellow-300">requirements.txt</span>      # Dependencies
+├── <span class="text-yellow-300">ecosystem.config.js</span>   # PM2 configuration
+├── <span class="text-yellow-300">gudang.db</span>            # Database SQLite (auto-generated)
+│
+├── <span class="text-purple-300">model/</span>
+│   ├── entity.py          # Dataclass entity
+│   └── database.py        # Koneksi & inisialisasi DB
+│
+├── <span class="text-purple-300">dto/</span>
+│   └── request_dto.py     # Validasi input
+│
+├── <span class="text-purple-300">repository/</span>
+│   ├── base_repository.py # Abstract base class
+│   ├── satuan_repository.py
+│   ├── jenis_repository.py
+│   ├── merek_repository.py
+│   ├── barang_repository.py
+│   └── stok_repository.py
+│
+├── <span class="text-purple-300">service/</span>
+│   ├── satuan_service.py
+│   ├── jenis_service.py
+│   ├── merek_service.py
+│   ├── barang_service.py
+│   └── stok_service.py
+│
+├── <span class="text-purple-300">route/</span>
+│   ├── satuan_bp.py       # Blueprint Satuan
+│   ├── jenis_bp.py        # Blueprint Jenis
+│   ├── merek_bp.py        # Blueprint Merek
+│   ├── barang_bp.py       # Blueprint Barang
+│   └── stok_bp.py         # Blueprint Stok
+│
+├── <span class="text-purple-300">templates/</span>
+│   ├── base.html          # Layout utama (Tailwind CSS)
+│   ├── home.html          # Halaman beranda
+│   ├── <span class="text-orange-300">satuan/</span>index.html
+│   ├── <span class="text-orange-300">jenis/</span>index.html
+│   ├── <span class="text-orange-300">merek/</span>index.html
+│   ├── <span class="text-orange-300">barang/</span>index.html
+│   └── <span class="text-orange-300">stok/</span>index.html
+│
+├── <span class="text-purple-300">tests/</span>
+│   ├── conftest.py         # Fixture database test
+│   ├── test_satuan_repository.py
+│   ├── test_jenis_repository.py
+│   ├── test_merek_repository.py
+│   ├── test_barang_repository.py
+│   ├── test_stok_repository.py
+│   ├── test_satuan_service.py
+│   ├── test_jenis_service.py
+│   ├── test_merek_service.py
+│   ├── test_barang_service.py
+│   ├── test_stok_service.py
+│   └── test_integration.py # Integration test full flow
+│
+├── <span class="text-purple-300">offline_packages/</span>     # (optional) Packages untuk offline install
+├── <span class="text-purple-300">venv/</span>                   # (optional) Virtual environment
+└── <span class="text-purple-300">logs/</span>                     # (auto) PM2 log files</div>
         </div>
 
         <!-- Footer -->
